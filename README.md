@@ -155,6 +155,15 @@ Estrutura de dados com os seguintes campos:
 - [google_mlkit_text_recognition](https://pub.dev/packages/google_mlkit_text_recognition) para reconhecimento de texto
 
 ---
+## link do pacote pub dev
+
+
+---
+[![Pub Version](https://img.shields.io/pub/v/docsnap.svg)](https://pub.dev/packages/docsnap)
+
+---
+
+
 
 ## Observações
 
