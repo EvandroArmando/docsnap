@@ -159,6 +159,8 @@ Estrutura de dados com os seguintes campos:
 
 
 ---
+[![link do package]](https://pub.dev/packages/docsnap)
+
 [![link do package](https://img.shields.io/pub/v/docsnap.svg)](https://pub.dev/packages/docsnap)
 
 ---
