@@ -4,17 +4,17 @@ Biblioteca Dart/Flutter para extração automática de dados de documentos de id
 
 > **Atenção:** Atualmente, **apenas a extração do Bilhete de Identidade (BI) angolano está disponível**. Outros documentos serão suportados em versões futuras.
 
-## Funcionalidades Disponíveis
+---
 
-- [x] Extração automática dos campos do **Bilhete de Identidade (BI) angolano**
-- [ ] Verificação e extração de dados do **Passaporte angolano** *(em desenvolvimento)*
-- [ ] Verificação e extração de dados da **Carta de Condução angolana** *(em desenvolvimento)*
+## Funcionalidades
 
-## Visão Geral
+- ✅ Extração automática dos campos do **Bilhete de Identidade (BI) angolano**
+- 🚧 Verificação e extração de dados do **Passaporte angolano** *(em desenvolvimento)*
+- 🚧 Verificação e extração de dados da **Carta de Condução angolana** *(em desenvolvimento)*
 
-O package `docsnap` identifica e extrai os principais campos do BI angolano a partir do texto reconhecido por OCR, facilitando automação de cadastros e validação de dados em aplicativos Flutter.
+---
 
-## Principais Funcionalidades do BI Angolano
+## Principais Campos Extraídos do BI
 
 - Nome completo
 - Número do bilhete
@@ -31,6 +31,8 @@ O package `docsnap` identifica e extrai os principais campos do BI angolano a pa
 - Tratamento de variações e erros comuns de OCR
 - Modelagem dos dados extraídos em uma estrutura única (`BiModel`)
 
+---
+
 ## Instalação
 
 Adicione ao seu `pubspec.yaml`:
@@ -42,23 +44,85 @@ dependencies:
 
 Execute:
 
-```
+```sh
 flutter pub get
 ```
 
+---
+
 ## Uso Básico
+
+A extração dos dados retorna uma instância da classe `BiModel`, que possui as seguintes propriedades:
+
+```dart
+enum Sexo { masculino, feminino, desconhecido }
+
+class BiModel {
+  final String nomeCompleto;
+  final String numeroBilhete;
+  final DateTime? dataNascimento;
+  final Sexo sexo;
+  final String estadoCivil;
+  final String residencia;
+  final String naturalDe;
+  final String provinciaDe;
+  final DateTime? emitidoEm;
+  final DateTime? validoAte;
+  final double? altura;
+
+  BiModel({
+    required this.nomeCompleto,
+    required this.numeroBilhete,
+    required this.dataNascimento,
+    required this.sexo,
+    required this.estadoCivil,
+    required this.residencia,
+    required this.naturalDe,
+    required this.provinciaDe,
+    required this.emitidoEm,
+    required this.validoAte,
+    required this.altura,
+  });
+}
+```
+
+### 1. Extraindo dados para o modelo `BiModel`
 
 ```dart
 import 'package:docsnap/model/bi_parser.dart';
+import 'package:docsnap/model/bi_model.dart';
 import 'dart:io';
 
-// Exemplo: processando uma imagem do BI angolano
 final biModel = await BiParser.parseFromImage(File('caminho/para/imagem.jpg'));
 
-print(biModel?.nomeCompleto);
-print(biModel?.numeroBilhete);
-// ... demais campos
+if (biModel != null) {
+  final dadosMap = biModel.toJson();
+
+  // Convertendo o mapa para o modelo BiModel novamente
+  final novoBiModel = BiModel.fromJson(dadosMap);
+
+  print(novoBiModel.nomeCompleto);
+  print(novoBiModel.numeroBilhete);
+  print(novoBiModel.sexo);
+  // ... demais campos
+}
 ```
+
+### 2. Extraindo dados e acessando como mapa
+
+```dart
+import 'package:docsnap/model/bi_parser.dart';
+
+final biModel = BiParser.parseFromText(textoOcr);
+
+if (biModel != null) {
+  print('Nome: ${biModel["nome_completo"]}');
+  print('Número do BI: ${biModel["numero_bilhete"]}');
+  // ... demais campos
+}
+```
+
+---
 
 ## API
 
@@ -76,17 +140,21 @@ Estrutura de dados com os seguintes campos:
 - `dataNascimento`
 - `sexo`
 - `estadoCivil`
-- `natural_de`
-- `provincia_de`
-- `resindecia`
+- `residencia`
+- `naturalDe`
+- `provinciaDe`
+- `emitidoEm`
+- `validoAte`
 - `altura`
-- `emitido_em`
-- `valido_ate`
+
+---
 
 ## Requisitos
 
 - Flutter >= 3.0
 - [google_mlkit_text_recognition](https://pub.dev/packages/google_mlkit_text_recognition) para reconhecimento de texto
+
+---
 
 ## Observações
 
@@ -94,11 +162,15 @@ Estrutura de dados com os seguintes campos:
 - A precisão depende da qualidade da imagem e do texto reconhecido.
 - O parser foi ajustado para os padrões do BI angolano.
 
+---
+
 ## Roadmap
 
-- [x] Suporte ao Bilhete de Identidade angolano
-- [ ] Suporte ao Passaporte angolano *(em breve)*
-- [ ] Suporte à Carta de Condução angolana *(em breve)*
+- ✅ Suporte ao Bilhete de Identidade angolano
+- 🚧 Suporte ao Passaporte angolano *(em breve)*
+- 🚧 Suporte à Carta de Condução angolana *(em breve)*
+
+---
 
 ## Licença
 
