@@ -1,6 +1,6 @@
 name: docsnap
 description: "Pacote Flutter para reconhecimento de texto em imagens usando Google ML Kit."
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/EvandroArmando/docsnap
 repository: https://github.com/EvandroArmando/docsnap
 
